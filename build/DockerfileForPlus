@@ -40,25 +40,20 @@ RUN --mount=type=secret,id=nginx-repo.crt \
 	&& setcap 'cap_net_bind_service=+ep' /usr/sbin/nginx \
 	&& setcap 'cap_net_bind_service=+ep' /usr/sbin/nginx-debug \
 	&& apt-get remove --purge --auto-remove -y gnupg1 \
-	&& rm -rf /var/lib/apt/lists/* \
-	&& rm -rf /etc/ssl/nginx \
-	&& rm /etc/apt/apt.conf.d/90nginx /etc/apt/sources.list.d/nginx-plus.list
-
-
-# forward nginx access and error logs to stdout and stderr of the ingress
-# controller process
-RUN ln -sf /proc/1/fd/1 /var/log/nginx/access.log \
-	&& ln -sf /proc/1/fd/1 /var/log/nginx/stream-access.log \
-	&& ln -sf /proc/1/fd/2 /var/log/nginx/error.log
-
-RUN mkdir -p /var/lib/nginx \
+	&& apt-get remove --purge -y libcap2-bin \
+	&& mkdir -p /var/lib/nginx \
 	&& mkdir -p /etc/nginx/secrets \
 	&& mkdir -p /etc/nginx/stream-conf.d \
 	&& chown -R nginx:0 /etc/nginx \
 	&& chown -R nginx:0 /var/cache/nginx \
 	&& chown -R nginx:0 /var/lib/nginx/ \
-	&& apt-get remove --purge -y libcap2-bin \
-	&& rm /etc/nginx/conf.d/*
+	&& rm -rf /var/lib/apt/lists/* \
+	&& rm -rf /etc/ssl/nginx \
+	&& rm /etc/apt/apt.conf.d/90nginx /etc/apt/sources.list.d/nginx-plus.list \
+	&& rm /etc/nginx/conf.d/* \
+	&& ln -sf /proc/1/fd/1 /var/log/nginx/access.log \
+	&& ln -sf /proc/1/fd/1 /var/log/nginx/stream-access.log \
+	&& ln -sf /proc/1/fd/2 /var/log/nginx/error.log
 
 EXPOSE 80 443
 
