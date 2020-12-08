@@ -75,13 +75,13 @@ RUN ln -sf /proc/1/fd/1 /var/log/nginx/access.log \
 	&& ln -sf /proc/1/fd/2 /var/log/nginx/error.log
 
 RUN  mkdir -p /var/lib/nginx \
-	      /etc/nginx/stream-conf.d \
-	      /etc/nginx/secrets \
-	      /etc/nginx/waf \
-	      /etc/nginx/waf/nac-policies \
-	      /etc/nginx/waf/nac-logconfs \
-	      /var/log/app_protect \
-	      /opt/app_protect \
+		/etc/nginx/stream-conf.d \
+		/etc/nginx/secrets \
+		/etc/nginx/waf \
+		/etc/nginx/waf/nac-policies \
+		/etc/nginx/waf/nac-logconfs \
+		/var/log/app_protect \
+		/opt/app_protect \
 	&& chown -R nginx:0 /etc/app_protect \
 	&& chown -R nginx:0 /usr/share/ts \
 	&& chown -R nginx:0 /etc/nginx \
